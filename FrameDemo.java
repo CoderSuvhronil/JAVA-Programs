@@ -1,13 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-class FrameDemo implements ActionListener
+class FrameDemoModified 
 {
 	JButton b1,b2;
 	JTextField t1,t2,t3;
 	JFrame f;
 	int count;
-	FrameDemo()
+	Font ft;
+	FrameDemoModified()
 	{
 		f=new JFrame("Demo Frame");
 		f.setTitle("My Frame");
@@ -16,6 +17,7 @@ class FrameDemo implements ActionListener
 		//f.setResizable(false);
 		b1=new JButton("SUM");
 		b2=new JButton("CLEAR");
+		ft=new Font("Algerian",Font.BOLD,20);
 		JLabel l1=new JLabel("Enter 1st Number ");
 		JLabel l2=new JLabel("Enter 2nd Number ");
 
@@ -43,25 +45,18 @@ class FrameDemo implements ActionListener
 		b2.setBounds(140,280,120,30);
 		f.add(b2); b2.setEnabled(false);
 
-		b1.addActionListener(this);
-		b2.addActionListener(this);
+		t1.setFont(ft);t2.setFont(ft);t3.setFont(ft);
+		t1.setToolTipText("Enter a number");
 
-		count=3;
-		f.setLocationRelativeTo(null);
-		f.setVisible(true);
-	}
-	public void actionPerformed(ActionEvent e)
-	{
-		int x,y,z;
-		if(e.getSource().equals(b1))
+		b1.addActionListener(new ActionListener()
 		{
-			while(count>0)
+			public void actionPerformed(ActionEvent e)
 			{
 				try
 				{
-					x=Integer.parseInt(t1.getText());
-					y=Integer.parseInt(t2.getText());
-					z=x+y;
+					int x=Integer.parseInt(t1.getText());
+					int y=Integer.parseInt(t2.getText());
+					int z=x+y;
 					t3.setText(String.valueOf(z));
 					JOptionPane.showMessageDialog(f,"Sum is "+z);
 					b2.setEnabled(true);
@@ -70,32 +65,32 @@ class FrameDemo implements ActionListener
 				catch(NumberFormatException e1)
 				{
 					count--;
-					JOptionPane.showMessageDialog(f,"Enter integers only. You have "+count+" chances left!!!");
+					JOptionPane.showMessageDialog(f,"Enter integers only. ");
 					t1.setText("");
 					t2.setText("");
 				}
 			}
-		}
-		else if(e.getSource().equals(b2))
+		});
+
+		b2.addActionListener(new ActionListener()
 		{
-			t1.setText("");
-			t2.setText("");
-			t3.setText("");
-			b1.setEnabled(true);
-			b2.setEnabled(false);
-		}
+			public void actionPerformed(ActionEvent e)
+			{
+				t1.setText("");
+				t2.setText("");
+				t3.setText("");
+				b1.setEnabled(true);
+				b2.setEnabled(false);
+			}			
+		});
+
+		
+		f.setLocationRelativeTo(null);
+		f.setVisible(true);
 	}
+	
 	public static void main(String s[])
 	{
-		new FrameDemo();	
+		new FrameDemoModified();	
 	} 
 }
-
-
-
-
-
-
-
-
-
